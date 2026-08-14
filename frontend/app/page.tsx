@@ -1,34 +1,38 @@
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Container } from "@/components/shared/container";
+import { AgentsSection } from "@/components/landing/agents-section";
+import { BenefitsSection } from "@/components/landing/benefits-section";
+import { FaqSection } from "@/components/landing/faq-section";
+import { FeaturesSection } from "@/components/landing/features-section";
+import { FinalCta } from "@/components/landing/final-cta";
+import { Footer } from "@/components/landing/footer";
+import { Hero } from "@/components/landing/hero";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { Navbar } from "@/components/landing/navbar";
+import { ProblemSection } from "@/components/landing/problem-section";
+import { ReportPreview } from "@/components/landing/report-preview";
+import { SolutionSection } from "@/components/landing/solution-section";
+import { TargetUsers } from "@/components/landing/target-users";
+import { TrustSection } from "@/components/landing/trust-section";
 import { PageShell } from "@/components/shared/page-shell";
 
 export default function Home() {
   return (
-    <PageShell className="items-center justify-center py-16">
-      <Container className="max-w-md">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <CardTitle>AI VentureLab</CardTitle>
-              <Badge variant="secondary">Phase 1</Badge>
-            </div>
-            <CardDescription>Foundation setup complete.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">
-              Multi-Agent AI Startup Research, Validation &amp; Product
-              Planning Platform
-            </p>
-          </CardContent>
-        </Card>
-      </Container>
+    <PageShell>
+      <Navbar />
+      <main>
+        <Hero />
+        <TrustSection />
+        <ProblemSection />
+        <SolutionSection />
+        <HowItWorks />
+        <AgentsSection />
+        <FeaturesSection />
+        <ReportPreview />
+        <BenefitsSection />
+        <TargetUsers />
+        <FaqSection />
+        <FinalCta />
+      </main>
+      <Footer />
     </PageShell>
   );
 }
