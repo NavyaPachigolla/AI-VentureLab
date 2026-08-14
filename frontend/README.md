@@ -12,7 +12,7 @@ Multi-Agent AI Startup Research, Validation & Product Planning Platform.
 
 ## Current Phase
 
-**Phase 2 — Landing Page** — public marketing site with multi-agent positioning and product preview sections.
+**Phase 3 — Dashboard Frontend** — authenticated-style workspace UI with mock data at `/dashboard`.
 
 ## Local Development
 
