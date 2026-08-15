@@ -1,4 +1,5 @@
 import { FolderOpen, Plus } from "lucide-react";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -30,7 +31,7 @@ export function EmptyState({
         <CardDescription className="max-w-md">{description}</CardDescription>
       </CardHeader>
       <CardContent className="flex justify-center pb-8">
-        <Button type="button">
+        <Button render={<Link href="/dashboard/projects/new" />}>
           <Plus className="size-4" aria-hidden="true" />
           {actionLabel}
         </Button>

@@ -12,7 +12,7 @@ Multi-Agent AI Startup Research, Validation & Product Planning Platform.
 
 ## Current Phase
 
-**Phase 3 — Dashboard Frontend** — authenticated-style workspace UI with mock data at `/dashboard`.
+**Phase 4 — Project Creation** — multi-step frontend project creation workflow at `/dashboard/projects/new`.
 
 ## Local Development
 

@@ -160,15 +160,21 @@ export const researchAgents: ResearchAgent[] = [
 ];
 
 export const sidebarNavItems = [
-  { label: "Overview", href: "/dashboard", icon: BarChart3, active: true },
-  { label: "Projects", href: "#projects", icon: FolderKanban, active: false },
+  {
+    label: "Overview",
+    href: "/dashboard",
+    icon: BarChart3,
+    match: "/dashboard",
+    exact: true,
+  },
+  { label: "Projects", href: "#projects", icon: FolderKanban },
   {
     label: "New Analysis",
-    href: "#new-analysis",
+    href: "/dashboard/projects/new",
     icon: Sparkles,
-    active: false,
+    match: "/dashboard/projects/new",
   },
-  { label: "Reports", href: "#reports", icon: FileText, active: false },
+  { label: "Reports", href: "#reports", icon: FileText },
 ] as const;
 
 export const sidebarSecondaryNav = [

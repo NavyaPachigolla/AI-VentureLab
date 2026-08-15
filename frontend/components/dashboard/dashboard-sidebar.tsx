@@ -1,5 +1,8 @@
+"use client";
+
 import { Sparkles } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import {
   dashboardUser,
@@ -13,10 +16,21 @@ type DashboardSidebarProps = {
   className?: string;
 };
 
+function isNavItemActive(
+  pathname: string,
+  item: (typeof sidebarNavItems)[number]
+) {
+  if (!("match" in item) || !item.match) return false;
+  if ("exact" in item && item.exact) return pathname === item.match;
+  return pathname === item.match || pathname.startsWith(`${item.match}/`);
+}
+
 export function DashboardSidebar({
   onNavigate,
   className,
 }: DashboardSidebarProps) {
+  const pathname = usePathname();
+
   return (
     <aside
       className={cn(
@@ -43,15 +57,17 @@ export function DashboardSidebar({
         </p>
         {sidebarNavItems.map((item) => {
           const Icon = item.icon;
+          const active = isNavItemActive(pathname, item);
+
           return (
             <Link
               key={item.label}
               href={item.href}
               onClick={onNavigate}
-              aria-current={item.active ? "page" : undefined}
+              aria-current={active ? "page" : undefined}
               className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
-                item.active
+                active
                   ? "bg-primary text-primary-foreground"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               )}

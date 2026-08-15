@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import Link from "next/link";
 
 import { dashboardUser } from "@/components/dashboard/dashboard-data";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,7 @@ export function DashboardHeader() {
           Turn your ideas into validated product opportunities.
         </p>
       </div>
-      <Button className="shrink-0" type="button">
+      <Button className="shrink-0" render={<Link href="/dashboard/projects/new" />}>
         <Plus className="size-4" aria-hidden="true" />
         Start New Analysis
       </Button>

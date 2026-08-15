@@ -1,4 +1,5 @@
 import { Sparkles } from "lucide-react";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,13 +28,18 @@ export function QuickStart() {
             opportunity.
           </CardDescription>
         </div>
-        <Button type="button" className="shrink-0">
+        <Button
+          type="button"
+          className="shrink-0"
+          render={<Link href="/dashboard/projects/new" />}
+        >
           Start New Analysis
         </Button>
       </CardHeader>
       <CardContent className="pt-0">
         <p className="text-xs text-muted-foreground">
-          Demo UI only — project creation will be available in a future phase.
+          Frontend project creation workflow — research automation connects in a
+          future phase.
         </p>
       </CardContent>
     </Card>
