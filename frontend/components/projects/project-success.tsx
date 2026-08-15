@@ -37,8 +37,8 @@ export function ProjectSuccess({
         <div className="rounded-xl border border-border/70 bg-muted/20 px-4 py-3 text-sm">
           <p className="font-medium">{projectName}</p>
           <p className="mt-2 text-muted-foreground">
-            Research automation will be connected in a future phase. This
-            submission is a frontend-only demo state.
+            Your project brief has been saved. Research automation will be
+            connected in a future phase.
           </p>
         </div>
 

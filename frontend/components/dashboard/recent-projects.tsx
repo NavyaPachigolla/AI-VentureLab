@@ -1,5 +1,5 @@
-import type { Project, ProjectStatus } from "@/components/dashboard/dashboard-data";
-import { recentProjects } from "@/components/dashboard/dashboard-data";
+import type { Project } from "@/components/dashboard/dashboard-data";
+import { EmptyState } from "@/components/dashboard/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +10,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+
+type ProjectStatus = Project["status"];
 
 function StatusBadge({ status }: { status: ProjectStatus }) {
   const variants: Record<ProjectStatus, string> = {
@@ -28,34 +30,34 @@ function StatusBadge({ status }: { status: ProjectStatus }) {
 
 function ProjectRow({ project }: { project: Project }) {
   return (
-  <tr className="border-b border-border/60 last:border-0">
-    <td className="px-4 py-4 align-top">
-      <div>
-        <p className="font-medium">{project.name}</p>
-        <p className="mt-1 max-w-md text-sm text-muted-foreground">
-          {project.description}
-        </p>
-      </div>
-    </td>
-    <td className="px-4 py-4 align-top">
-      <StatusBadge status={project.status} />
-    </td>
-    <td className="px-4 py-4 align-top">
-      {project.validationScore !== null ? (
-        <span className="font-medium">{project.validationScore}%</span>
-      ) : (
-        <span className="text-muted-foreground">—</span>
-      )}
-    </td>
-    <td className="px-4 py-4 align-top text-sm text-muted-foreground">
-      {project.lastUpdated}
-    </td>
-    <td className="px-4 py-4 align-top">
-      <Button type="button" variant="outline" size="sm">
-        View Report
-      </Button>
-    </td>
-  </tr>
+    <tr className="border-b border-border/60 last:border-0">
+      <td className="px-4 py-4 align-top">
+        <div>
+          <p className="font-medium">{project.name}</p>
+          <p className="mt-1 max-w-md text-sm text-muted-foreground">
+            {project.description}
+          </p>
+        </div>
+      </td>
+      <td className="px-4 py-4 align-top">
+        <StatusBadge status={project.status} />
+      </td>
+      <td className="px-4 py-4 align-top">
+        {project.validationScore !== null ? (
+          <span className="font-medium">{project.validationScore}%</span>
+        ) : (
+          <span className="text-muted-foreground">—</span>
+        )}
+      </td>
+      <td className="px-4 py-4 align-top text-sm text-muted-foreground">
+        {project.lastUpdated}
+      </td>
+      <td className="px-4 py-4 align-top">
+        <Button type="button" variant="outline" size="sm">
+          View Report
+        </Button>
+      </td>
+    </tr>
   );
 }
 
@@ -91,10 +93,29 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 type RecentProjectsProps = {
-  projects?: Project[];
+  projects: Project[];
 };
 
-export function RecentProjects({ projects = recentProjects }: RecentProjectsProps) {
+export function RecentProjects({ projects }: RecentProjectsProps) {
+  if (projects.length === 0) {
+    return (
+      <section aria-labelledby="recent-projects-heading">
+        <div className="mb-4">
+          <h2
+            id="recent-projects-heading"
+            className="text-lg font-semibold tracking-tight"
+          >
+            Recent Projects
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Saved projects from your research workspace.
+          </p>
+        </div>
+        <EmptyState />
+      </section>
+    );
+  }
+
   return (
     <section aria-labelledby="recent-projects-heading">
       <div className="mb-4 flex items-center justify-between gap-3">
@@ -106,7 +127,7 @@ export function RecentProjects({ projects = recentProjects }: RecentProjectsProp
             Recent Projects
           </h2>
           <p className="text-sm text-muted-foreground">
-            Mock demo projects for dashboard preview.
+            Saved projects from your research workspace.
           </p>
         </div>
       </div>

@@ -26,6 +26,8 @@ export function ProjectForm() {
     useState<ProjectFormData>(initialProjectFormData);
   const [errors, setErrors] = useState<ProjectFormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   function updateField<K extends keyof ProjectFormData>(
     key: K,
@@ -37,6 +39,7 @@ export function ProjectForm() {
       delete next[key];
       return next;
     });
+    setSubmitError(null);
   }
 
   function handleContinue() {
@@ -51,11 +54,42 @@ export function ProjectForm() {
     setCurrentStep((step) => Math.max(step - 1, 0) as FormStep);
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const allErrors = validateAll(formData);
     setErrors(allErrors);
     if (hasErrors(allErrors)) return;
-    setSubmitted(true);
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const response = await fetch("/api/projects", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result: {
+        error?: string;
+        errors?: Record<string, string>;
+      } = await response.json();
+
+      if (!response.ok) {
+        if (result.errors) {
+          setErrors((current) => ({ ...current, ...result.errors }));
+        }
+        setSubmitError(result.error ?? "Failed to save project.");
+        return;
+      }
+
+      setSubmitted(true);
+    } catch {
+      setSubmitError("Unable to reach the server. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   function handleClearForm() {
@@ -67,6 +101,7 @@ export function ProjectForm() {
     setErrors({});
     setCurrentStep(0);
     setSubmitted(false);
+    setSubmitError(null);
   }
 
   function handleCreateAnother() {
@@ -74,6 +109,7 @@ export function ProjectForm() {
     setErrors({});
     setCurrentStep(0);
     setSubmitted(false);
+    setSubmitError(null);
   }
 
   function handleStepClick(step: FormStep) {
@@ -121,25 +157,45 @@ export function ProjectForm() {
         ) : null}
       </div>
 
+      {submitError ? (
+        <p className="mt-6 text-sm text-destructive" role="alert">
+          {submitError}
+        </p>
+      ) : null}
+
       <div className="mt-8 flex flex-col-reverse gap-3 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
-        <Button type="button" variant="ghost" onClick={handleClearForm}>
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={handleClearForm}
+          disabled={isSubmitting}
+        >
           Clear Form
         </Button>
 
         <div className="flex flex-col gap-3 sm:flex-row">
           {currentStep > 0 ? (
-            <Button type="button" variant="outline" onClick={handleBack}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleBack}
+              disabled={isSubmitting}
+            >
               Previous
             </Button>
           ) : null}
 
           {currentStep < 4 ? (
-            <Button type="button" onClick={handleContinue}>
+            <Button type="button" onClick={handleContinue} disabled={isSubmitting}>
               Continue
             </Button>
           ) : (
-            <Button type="button" onClick={handleSubmit}>
-              Start Research
+            <Button
+              type="button"
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Saving..." : "Start Research"}
             </Button>
           )}
         </div>

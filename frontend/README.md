@@ -9,10 +9,24 @@ Multi-Agent AI Startup Research, Validation & Product Planning Platform.
 - **TypeScript** 5
 - **Tailwind CSS** 4
 - **shadcn/ui** (base-nova)
+- **Supabase** (PostgreSQL persistence)
 
 ## Current Phase
 
-**Phase 4 — Project Creation** — multi-step frontend project creation workflow at `/dashboard/projects/new`.
+**Phase 5 — Supabase Database Integration** — project briefs are persisted via Supabase and exposed through `/api/projects`.
+
+## Environment Variables
+
+Copy `.env.example` to `.env.local` and set:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+
+Use only the Supabase publishable key in the frontend. Never commit real credentials.
+
+## Database Migrations
+
+SQL migrations live in `supabase/migrations/`. Apply them to your Supabase project before using project persistence.
 
 ## Local Development
 
