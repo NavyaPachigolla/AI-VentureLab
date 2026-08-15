@@ -1,7 +1,8 @@
 import { Sparkles } from "lucide-react";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {
   Card,
   CardContent,
@@ -28,13 +29,12 @@ export function QuickStart() {
             opportunity.
           </CardDescription>
         </div>
-        <Button
-          type="button"
-          className="shrink-0"
-          render={<Link href="/dashboard/projects/new" />}
+        <Link
+          href="/dashboard/projects/new"
+          className={cn(buttonVariants(), "shrink-0")}
         >
           Start New Analysis
-        </Button>
+        </Link>
       </CardHeader>
       <CardContent className="pt-0">
         <p className="text-xs text-muted-foreground">
